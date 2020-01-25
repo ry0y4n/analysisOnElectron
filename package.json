@@ -1,0 +1,15 @@
+{
+  "name": "analysisonelectron",
+  "version": "1.0.0",
+  "description": "analysis the eye datas",
+  "index": "src/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "momosuke",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^7.1.10",
+    "electron-builder": "^22.2.0"
+  }
+}
