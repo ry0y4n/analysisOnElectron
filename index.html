@@ -3,42 +3,72 @@
     <title>解析君byモモスケ</title>
 <link href="style.css" rel="stylesheet">
 <script>
-  function exe() {
-  let remote = require("electron").remote;
-  let app = remote.app;
+	function osDetermin() {
+		var ua = window.navigator.userAgent.toLowerCase();
 
-  let path = app.getAppPath();
+		if(ua.indexOf("windows nt") !== -1) {
+			console.log("「Microsoft Windows」をお使いですね!");
+			return 1;
+		} else if(ua.indexOf("mac os x") !== -1) {
+			console.log("「macOS」をお使いですね!");
+			return 2;
+		} else {
+			console.log("何をお使いなのですか?");
+			return 0;
+		}
+	}
 
-  console.log(path)
+	function exe() {
+		let remote = require("electron").remote;
+		let app = remote.app;
 
-  const exec = require("child_process").execFile;
-  //exec(path + "/analysis.exe");
-  exec(path + "/violin_plot.bat");
-  }
+		let path = app.getAppPath();
 
-  function exe2() {
-  let remote = require("electron").remote;
-  let app = remote.app;
+		console.log(path)
 
-  let path = app.getAppPath();
+		const exec = require("child_process").execFile;
 
-  console.log(path)
 
-  const exec = require("child_process").execFile;
-  exec(path + "/box_plot.bat");
-  }
+		if (osDetermin() == 1) {
+			exec(path + "/violin_plot.bat");
+		} else {
+			exec(path + "/violin_plot.sh");
+		}
+	}
 
-  function exe3() {
-  let remote = require("electron").remote;
-  let app = remote.app;
+	function exe2() {
+		let remote = require("electron").remote;
+		let app = remote.app;
 
-  let path = app.getAppPath();
+		let path = app.getAppPath();
 
-  console.log(path)
+		console.log(path)
 
-  const exec = require("child_process").execFile;
-  exec(path + "/lasso_regression.bat");
-  }
+		const exec = require("child_process").execFile;
+
+		if (osDetermin() == 1) {
+			exec(path + "/box_plot.bat");
+		} else {
+			exec(path + "/box_plot.sh");
+		}
+	}
+
+	function exe3() {
+		let remote = require("electron").remote;
+		let app = remote.app;
+
+		let path = app.getAppPath();
+
+		console.log(path)
+
+		const exec = require("child_process").execFile;
+
+		if (osDetermin() == 1) {
+			exec(path + "/lasso_regression.bat");
+		} else {
+			exec(path + "/lasso_regression.sh");
+		}
+	}
 </script>
 </head>
 <body>
@@ -195,19 +225,18 @@
 			</div>
             <button class="btn" onclick="exe();">Analysis</button>
 		</div>
-  </div>
+  	</div>
 
 	<div class="page">
-	<h4>Hover the card</h4>
-	<ul><li> <<< </li>
+		<h4>Hover the card</h4>
+		<ul><li> <<< </li>
 
-	<li> >>> </li>
-	</ul>
+		<li> >>> </li>
+		</ul>
 	</div>
 
 </div>
 	
-
 </body>
 </html>
 
