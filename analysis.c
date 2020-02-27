@@ -157,7 +157,7 @@ int main() {
 
     // 解析結果を書き込みcsvファイルとストリームの指定
     FILE *resfp;
-    char result_file_name[] = "raw_result.csv";
+    char result_file_name[] = "raw_result2.csv";
     FILE *memfp;
     char member_file_name[] = "members2.csv";
 
