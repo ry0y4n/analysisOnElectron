@@ -2,7 +2,7 @@
 #include<string.h>
 
 // 視線データの最大数（静的に確保しないと面倒だから，これくらい確保してけばいいだろう的な値）
-#define DATA_MAX 5500
+#define DATA_MAX 6000
 
 // 実験時間
 #define EXPERIMENT_TIME 60000
@@ -28,14 +28,17 @@
 #define RIGHT_SIDE_VIEW_TOP 597
 #define RIGHT_SIDE_VIEW_BOTTOM 952
 
+// 各図のボーダーを配列に格納
 int borders[3][4] = {
     {FRONT_VIEW_LEFT, FRONT_VIEW_RIGHT, FRONT_VIEW_TOP, FRONT_VIEW_BOTTOM},
     {PLAN_VIEW_LEFT, PLAN_VIEW_RIGHT, PLAN_VIEW_TOP, PLAN_VIEW_BOTTOM},
     {RIGHT_SIDE_VIEW_LEFT, RIGHT_SIDE_VIEW_RIGHT, RIGHT_SIDE_VIEW_TOP, RIGHT_SIDE_VIEW_BOTTOM}
 };
 
+// 注視回数の初期化
 int fixation_count = 0;
 
+// 上から注視の開始時間・注視継続時間・注視対象オブジェクト
 int start_time_list[EXPERIMENT_TIME / FIXATION_TIME];
 int fixation_time_list[EXPERIMENT_TIME / FIXATION_TIME];
 int fixation_position_list[EXPERIMENT_TIME / FIXATION_TIME];
@@ -47,6 +50,9 @@ typedef struct {
     int t;
 } Csv;
 
+// 注視解析関数
+// 1回で1つの図についての注視解析ができる．"num_of_pos"で対象オブジェクトを指定できる．
+// 0: 正面図，1: 平面図，2: 右側面図
 void countFixation(int num_of_pos, Csv *csv, int data_count) {
     int i;
     double start_time = 0;
@@ -117,7 +123,7 @@ int partition (int array[], int left, int right) {
   return j;
 }
 
-// クイックソート
+// クイックソート(O(nlogn)なので速い．アルゴリズムは別に追わなくてもいい)
 void quick_sort (int array[], int left, int right) {
   int pivot;
 
@@ -158,10 +164,13 @@ int main(int argc, char *argv[]) {
     for (num_of_pos = 0; num_of_pos < 3; num_of_pos++) {
         countFixation(num_of_pos, csv, data_count);
     }
+    // 各図ごとに注視解析したので配列内を時系列順にソートする
+    quick_sort(start_time_list, 0, fixation_count-1);
 
     FILE *resfp;
     char result_file_name[50];
     strcpy(result_file_name, argv[2]);
+    
 
     if ((resfp = fopen(result_file_name, "w")) == NULL) {
         fprintf(stderr, "countFixation.csvファイルのオープンに失敗しました．\n");
@@ -179,7 +188,7 @@ int main(int argc, char *argv[]) {
     printf("the number of data: %d\n", data_count);
     printf("the number of fixation %d\n", fixation_count);
     
-    quick_sort(start_time_list, 0, fixation_count-1);
+    
 
     for (i = 0; i < fixation_count; i++) printf("%d, %d, %d\n", start_time_list[i], fixation_time_list[i], fixation_position_list[i]);
     printf("\n%lu\n", sizeof(start_time_list) / sizeof(int));

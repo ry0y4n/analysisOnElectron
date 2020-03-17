@@ -2,8 +2,9 @@
 #include<string.h>
 
 // 視線データの最大数（静的に確保しないと面倒だから，これくらい確保してけばいいだろう的な値）
-#define DATA_MAX 5500
+#define DATA_MAX 6000
 
+// 2019バージョンのサイズ
 // 正面図のサイズ
 #define FRONT_VIEW_LEFT 288
 #define FRONT_VIEW_RIGHT 811
@@ -23,14 +24,15 @@
 #define RIGHT_SIDE_VIEW_BOTTOM 952
 
 // 視線データを格納する構造体
-typedef struct csv_template {
+typedef struct {
     double x;
     double y;
     double t;
 } Csv;
 
 
-// メイン関数
+// メイン関数 (argcには引数の数(ファイル名を含む)，argvには引数の配列(ファイル名を含む))
+// 呼び出し方としては「./countTransition "視線データファイル" "解析結果出力ファイル"」
 int main(int argc, char *argv[]) {
 
     // 諸々の変数を定義
@@ -56,6 +58,7 @@ int main(int argc, char *argv[]) {
     // ファイルをクローズする
     fclose(fp);
 
+    // 遷移回数格納用の変数の初期化
     int transition_count_of_into_front = 0, transition_count_of_into_plan = 0, transition_count_of_into_right_side = 0;
 
     // 視線がオブジェクト内に存在して，尚且つ，前の視線が違うオブジェクト上にあった場合にカウント
@@ -74,6 +77,7 @@ int main(int argc, char *argv[]) {
                 transition_count_of_into_right_side++;
     }
 
+    // 総遷移回数を導出
     transition_count = transition_count_of_into_front + transition_count_of_into_plan + transition_count_of_into_right_side;
 
     FILE *resfp;

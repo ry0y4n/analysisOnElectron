@@ -21,6 +21,7 @@
 		}
 	}
 
+	// ヴァイオリンプロットする関数
 	function exe() {
 		let remote = require("electron").remote;
 		let app = remote.app;
@@ -31,7 +32,7 @@
 
 		const exec = require("child_process").execFile;
 
-
+		// OSを判別してbatかshを使い分ける
 		if (osDetermin() == 1) {
 			exec(path + "/violin_plot.bat");
 		} else {
@@ -39,6 +40,7 @@
 		}
 	}
 
+	// ボックスプロットする関数
 	function exe2() {
 		let remote = require("electron").remote;
 		let app = remote.app;
@@ -56,6 +58,7 @@
 		}
 	}
 
+	// ラッソ回帰直線する関数(前処理必須)
 	function exe3() {
 		let remote = require("electron").remote;
 		let app = remote.app;
@@ -73,6 +76,7 @@
 		}
 	}
 
+	// 注視・遷移の総合的な解析関数
 	function exe4() {
 		let remote = require("electron").remote;
 		let app = remote.app;
@@ -180,6 +184,7 @@
 	
 	// File APIに対応しているか確認
 	if(window.File && window.FileReader && window.FileList && window.Blob) {
+		// 注視に特化した関数
 		function analyzeFixation(e) {
 			// ファイル情報を取得
 			var fileData = e.target.files[0];
@@ -190,25 +195,6 @@
 				alert('CSVファイルを選択してください');
 				return;
 			}
-
-			/*
-	
-			// FileReaderオブジェクトを使ってファイル読み込み
-			var reader = new FileReader();
-			// ファイル読み込みに成功したときの処理
-			reader.onload = function() {
-				var cols = reader.result.split('\n');
-				var data = [];
-				for (var i = 0; i < cols.length; i++) {
-					data[i] = cols[i].split(',');
-				}
-				//var insert = createTable(data);
-				//result.appendChild(insert);
-			}
-			// ファイル読み込みを実行
-			reader.readAsText(fileData);
-
-			*/
 
 			let remote = require("electron").remote;
 			let app = remote.app;
@@ -241,6 +227,7 @@
 
 		}
 
+		// 遷移に特化した関数
 		function analyzeTransition(e) {
 			// ファイル情報を取得
 			var fileData = e.target.files[0];
@@ -251,25 +238,6 @@
 				alert('CSVファイルを選択してください');
 				return;
 			}
-
-			/*
-	
-			// FileReaderオブジェクトを使ってファイル読み込み
-			var reader = new FileReader();
-			// ファイル読み込みに成功したときの処理
-			reader.onload = function() {
-				var cols = reader.result.split('\n');
-				var data = [];
-				for (var i = 0; i < cols.length; i++) {
-					data[i] = cols[i].split(',');
-				}
-				//var insert = createTable(data);
-				//result.appendChild(insert);
-			}
-			// ファイル読み込みを実行
-			reader.readAsText(fileData);
-
-			*/
 
 			let remote = require("electron").remote;
 			let app = remote.app;
@@ -310,6 +278,7 @@
 		transition.style.display = 'none';
 	}
 
+	// ファイル名のベースネームを取り出す関数
 	function baseName(str)
 	{
 	var base = new String(str).substring(str.lastIndexOf('/') + 1); 
