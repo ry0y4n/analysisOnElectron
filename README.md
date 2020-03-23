@@ -66,4 +66,4 @@ Note: もしあなたがLinux Bash for Windowsを使っているなら，[この
 # License
 ライセンスを明示する
 
-**analysisOnElectron**is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+**analysisOnElectron**is under [MIT license](https://en.wikipedia.org/wiki/MIT_License)
