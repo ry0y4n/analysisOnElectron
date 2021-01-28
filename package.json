@@ -9,7 +9,7 @@
   "author": "momosuke",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^7.1.10",
+    "electron": "^9.4.0",
     "electron-builder": "^22.2.0"
   }
 }
